@@ -1,0 +1,12 @@
+power_meter:
+  max_sample_period: 4
+  measurements:
+  - physical_quantity: power
+    type: active
+  - physical_quantity: power
+    type: reactive
+  - physical_quantity: power
+    type: apparent
+  model: varies
+  sample_period: 1
+  wireless: false

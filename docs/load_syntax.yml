@@ -1,0 +1,70 @@
+# Metadata
+# All fields are optional but recommended
+# additional fields may be added as desired
+metadata:
+  name: Example Dataset
+  desc: Reference for the nilm_identify_load description format
+  author: John Donnal
+  contact: donnal@usna.edu
+
+# Dataset
+# All fields are optional as long as at least one nilm_identify_load
+# is fixed. Otherwise the start and end fields must be
+# specified. The default baseline is flat (0W) and the
+# default noise is none (0W)
+dataset:
+  start: 1 July 2021 # (optional) date or timestamp
+  end: 3 July 2021 # (optional) date or timestamp
+  baseline: /reference_streams/house1 # (optional)
+  noise: 3W # arbitrary white noise in watts
+
+# Resourcse
+# Specify data sources and output locations
+resources:
+  baseline_node: hollyberry # (optional) node name
+  library_node: hollyberry # (optional) node name
+  output_node: lambda # (optional) node name
+  # --- required fields ---
+  library_database: library_database.sql # SQlite database file
+  output_stream: /Load Library/tests # Joule data stream path
+  output_file: load_library_test.hd5 # HDF5 data file
+
+# Loads
+# Three different options [random, fixed, periodic]
+# for loads that support time scaling a duration may be
+# specified with a colon after the primary value(s)
+
+# Add [count] runs of the nilm_identify_load with [duration] time
+# randomly across the entire dataset
+#   random count:duration
+
+# Run the nilm_identify_load at specified [start] times
+# for [duration] amount of time
+#   fixed start:duration, start:duration, ....
+
+# Run the nilm_identify_load periodically after an initial [delay]
+# runs every [interval] for [duration] amount of time
+#   periodic: interval:delay:duration
+
+loads:
+  # example of a random nilm_identify_load specifying all optional settings
+  - name: Raspberry Pi # may differ from reference nilm_identify_load name
+    load_id: 3 # found in nilm_identify_load library docs_old interface
+    scale_factor: 2.5 # (optional) increase/decrease power
+    flex: # tolerances for random variation
+      on_time: 5% # these are the default values
+      off_time: 10% # has no effect for random nilm_identify_load
+      power: 15%
+    runs: random 30:15m #run 30 times for ~15 min each
+  # example of a fixed nilm_identify_load with no randomness (flex)
+  - name: Glue Gun
+    load_id: 4
+    scale_factor: 1.0 # default value
+    flex: none # do not randomly vary nilm_identify_load
+    runs: fixed 1h, 2h, 3h # run at specified times
+  # example of a periodic nilm_identify_load using all default settings
+  - name: Heater
+    load_id: 5
+    runs: periodic 1h:20m #run for 20 minutes every hour
+
+

@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="assets/css/datatables.min.css"/>
+    <script type="text/javascript" src="assets/js/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/datatables.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#nilm_identify_load-table').DataTable({
+                "paging": false
+            });
+        });
+        function show(name, path){
+            $('#modal-title').html(name);
+            $('#modal-image').attr("src", "assets/figures/"+path+".png");
+            $('#modal').modal('show');
+        }
+    </script>
+    <style>
+        .top-brand{
+            background: #eee;
+            padding-left: 30px;
+            margin-bottom: 20px;
+            border-bottom-style: solid;
+            border-bottom-width: 2px;
+            border-bottom-color: #aaa;
+
+        }
+        .top-brand > img{
+            margin: 5px;
+        }
+    </style>
+    <title>NILM Load Database</title>
+</head>
+<body>
+<div class="top-brand">
+    <img src="assets/images/logo.png" alt="">
+    <a href="guide.html" class="btn btn-primary float-right" style="margin-right: 20px; margin-top: 10px;">
+        How to Use</a>
+</div>
+<div class="container">
+
+    <div class="row">
+        <table id="load-table" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Load</th>
+                <th>Picture</th>
+                <th>Snapshot</th>
+                <th>Spectrum</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for load in loads %}
+                <tr>
+                    <td> {{ load.id }}</td>
+                    <td>{{ load.name }}
+                    <p class="text-muted d-none d-md-block"
+                    style="margin-bottom: 0">{{ load.description }}</p>
+                    <p class="text-info d-none d-lg-block"
+                       style="font-family: monospace; margin-bottom: 0">{{ load.stream }}</p></td>
+                    <td><img class="img-thumbnail"
+                             style="max-height: 145px;" alt="{{ load.name }}"
+                             src="assets/images/{{ load.image }}"></td>
+
+                    <td><img class="img-thumbnail"
+                             style="max-height: 145px; cursor: pointer;" alt="{{ load.name }} Power"
+                             src="assets/figures/power_{{ load.id }}.png"
+                             onclick="show('{{ load.name }}','power_{{ load.id }}')"></td>
+                    <td><img class="img-thumbnail" alt="{{ load.name }} Spectrum"
+                             style="max-height: 145px; cursor: pointer;"
+                             src="assets/figures/spectrum_{{ load.id }}.png"
+                             onclick="show('{{ load.name }}','spectrum_{{ load.id }}')"></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+            <tr>
+                  <th>ID</th>
+                <th>Load</th>
+                <th>Picture</th>
+                <th>Snapshot</th>
+                <th>Spectrum</th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal_label" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-title">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <img class="img-thumbnail" id="modal-image" src="#">
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

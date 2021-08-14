@@ -1,0 +1,73 @@
+metadata:
+  name: Example Dataset
+  desc: E2E Test
+  author: John Donnal
+  contact: donnal@usna.edu
+
+dataset:
+  start: 09:00 July 30 2021
+  end: 13:00 July 30 2021
+  timezone: America/New_York
+  noise: 20W # arbitrary white noise in watts
+
+resources:
+  baseline_node: lambda
+  library_node: hollyberry
+  output_node: lambda
+  library_database: ../../database/library.sqlite
+  output_stream: /Load Library/paper
+  output_file: paper_dataset.hd5
+
+loads:
+  - name: Fridge
+    load_id: 86
+    runs: periodic 15m
+
+  - name: Space Heater
+    load_id: 5
+    scale_factor: 2.0
+    runs: periodic 10m:2m
+
+  - name: Microwave
+    load_id: 27
+    runs: fixed 1h, 1.5h
+
+  - name: Sump Pump
+    load_id: 39
+    runs: periodic 20m
+
+  - name: Vacuum Cleaner
+    load_id: 41
+    runs: fixed 2h
+
+  - name: Shop Vac
+    load_id: 49
+    runs: random 3
+
+  - name: Blender
+    load_id: 79
+    runs: random 2
+
+  - name: Chest Freezer
+    load_id: 72
+    runs: periodic 7m
+
+  - name: Kitchen Aid
+    runs: random 3
+    load_id: 81
+
+  - name: Dehumidifier
+    load_id: 22
+    runs: random 25
+
+  - name: Washing Machine
+    load_id: 45
+    runs: fixed 1.5h
+
+  - name: Gas Dryer
+    load_id: 25
+    runs: fixed 3h, 3.25h
+
+  - name: Electric Oven
+    load_id: 85
+    runs: random 30

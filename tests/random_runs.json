@@ -1,0 +1,47 @@
+[
+    {
+        "end_ts": 1625137604939316,
+        "load_id": 2,
+        "name": "Space Heater",
+        "scale_factor": 1.0041080907175057,
+        "start_ts": 1625137586453978,
+        "steady_state_blocks": 1,
+        "time_padding": 158338
+    },
+    {
+        "end_ts": 1625137892465313,
+        "load_id": 2,
+        "name": "Space Heater",
+        "scale_factor": 0.9934842138419782,
+        "start_ts": 1625137873986915,
+        "steady_state_blocks": 1,
+        "time_padding": 151398
+    },
+    {
+        "end_ts": 1625137443708881,
+        "load_id": 2,
+        "name": "Big Long Space Heater",
+        "scale_factor": 2.00446374572364,
+        "start_ts": 1625137422342991,
+        "steady_state_blocks": 2,
+        "time_padding": 472890
+    },
+    {
+        "end_ts": 1625137942110612,
+        "load_id": 2,
+        "name": "Big Long Space Heater",
+        "scale_factor": 2.0058111810419637,
+        "start_ts": 1625137920937148,
+        "steady_state_blocks": 2,
+        "time_padding": 280464
+    },
+    {
+        "end_ts": 1625137522249599,
+        "load_id": 2,
+        "name": "Big Long Space Heater",
+        "scale_factor": 2.0029413249665553,
+        "start_ts": 1625137501166174,
+        "steady_state_blocks": 2,
+        "time_padding": 190425
+    }
+]

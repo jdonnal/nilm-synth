@@ -1,0 +1,25 @@
+metadata:
+  name: Example Dataset
+  desc: E2E Test
+  author: John Donnal
+  contact: donnal@usna.edu
+
+dataset:
+  start: 09:00 July 30 2021
+  end: 10:00 July 30 2021
+  timezone: America/New_York
+  noise: 20W # arbitrary white noise in watts
+
+resources:
+  baseline_node: lambda
+  library_node: hollyberry
+  output_node: lambda
+  library_database: ../../database/library.sqlite
+  output_stream: /Load Library/paper
+  output_file: paper_dataset.hd5
+
+loads:
+  - name: Space Heater
+    load_id: 5
+    scale_factor: 2.0
+    runs: periodic 10m:0.5m

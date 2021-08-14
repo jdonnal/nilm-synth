@@ -1,0 +1,12 @@
+venv
+*.pyc
+html
+*_data
+.idea
+*~
+.ipynb_checkpoints
+.DS_Store
+*.hd5
+*.egg-info
+old_code
+*.raw

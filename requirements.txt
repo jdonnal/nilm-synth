@@ -1,0 +1,10 @@
+nilm~=0.8.3
+joule~=0.9.23+16.g04f987a.dirty
+numpy~=1.19.4
+sqlalchemy~=1.3.20
+Jinja2~=2.11.2
+PyYAML~=5.3.1
+h5py~=3.1.0
+setuptools~=50.3.2
+click~=7.1.2
+pandas~=1.1.4

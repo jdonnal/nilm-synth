@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="assets/css/datatables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="assets/css/codemirror.css"/>
+    <script type="text/javascript" src="assets/js/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/codemirror.js"></script>
+    <script type="text/javascript" src="assets/js/yaml.js"></script>
+
+    <title>NILM Load Database</title>
+    <style>
+        .top-brand{
+            background: #eee;
+            padding-left: 30px;
+            margin-bottom: 20px;
+            border-bottom-style: solid;
+            border-bottom-width: 2px;
+            border-bottom-color: #aaa;
+
+        }
+        .top-brand > img{
+            margin: 5px;
+        }
+        .code-container {
+            border: 1px;
+            border-style: solid;
+            border-color: grey;
+            margin-bottom: 15px;
+        }
+        .header.bash {
+          border: 1px;
+          border-style: solid;
+          border-bottom: 0;
+          border-color: grey;
+          padding-left: 10px;
+          background: grey;
+          color: white;
+        }
+        .code.bash {
+          background: #545454;
+          border: 2px;
+          border-style: solid;
+          border-color: grey;
+          padding: 5px;
+          font-family: monospace;
+          font-size: 14px;
+          color: #fff;
+          white-space: pre;
+          line-height: normal;
+          margin-bottom: 20px;
+        }
+
+        .bash>i {
+          color: #dbdbdb;
+        }
+
+        .bash>p>i {
+          color: #dbdbdb;
+        }
+
+        .bash>p {
+          margin-top: 0px;
+        }
+
+        .code-header{
+            background: #aaa;
+            padding-left: 10px;
+            border-style: solid;
+            border-bottom-width: 0;
+            border-top-width: 1px;
+            border-left-width: 1px;
+            border-right-width: 1px;
+            border-top-right-radius: 5px;
+            border-top-left-radius: 5px;
+            border-color: #666;
+            font-weight: 300;
+        }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            CodeMirror.fromTextArea(document.getElementById("code"),
+                {  mode: "yaml",
+                   styleActiveLine: true,
+                   lineNumbers: true,
+                   lineWrapping: true});
+        });
+    </script>
+</head>
+<body>
+<div class="top-brand">
+    <img src="assets/images/logo.png" alt="">
+    <a href="index.html" class="btn btn-primary float-right" style="margin-right: 20px; margin-top: 10px;">
+        Back</a>
+</div>
+
+<div class="container">
+    <h2>How to Use This Library</h2>
+    <p>
+        Loads can be combined to create labeled training data using the <code>build-training-data</code>
+        command. Some loads have steady state regions which are displayed with a
+        pink highlight in the power plot. These loads can be extended to arbitrary duration. Loads without a
+        steady state region have a fixed duration. The library has both single and
+        three phase loads. All loads selected for a training set must have the same phase configuration.
+    </p>
+    <h4> Load File Syntax</h4>
+    Loads are specified with <a href="https://yaml.org/refcard.html">YAML</a> file as specified below:
+    <ul>
+        <li><b>stream</b>: the name of the training data stream. If a path is specified the stream will be placed in a folder
+           within <code>/Training Data</code>.</li>
+        <li><b>loads</b>: a list of one or more loads following the load specification syntax described below
+        <ul>
+            <li><b>name</b>: <i>[optional]</i> Custom load name, default is the Load ID and Load Library name</li>
+            <li><b>description</b>: <i>[optional]</i> Custom load description, default is the Load Library description</li>
+            <li><b>load_id</b>: The Load Library ID (first column of the Load Library table)</li>
+            <li><b>delay</b>: Delay until the load turns on in microseconds. Add suffix <code>[s|m|h]</code> to specify time in units of seconds, minutes, hours respectively</li>
+            <li><b>steady_state_duration</b>: <i>[optional]</i> Minimum steady state duration in microseconds. Add suffix <code>[s|m|h]</code> to specify time in units of seconds, minutes, hours respectively. If a steady state is available it will be repeated an integer multiple of times until it exceeds the specified duration.
+            If the value is not specified a single steady state interval will be used. Do not specify this value if the load does not have a steady state</li>
+            <li><b>scale_factor</b>: <i>[optional]</i> Scale the load by a specified amount. Default is 1.0 (no scaling)</li>
+
+        </ul>
+        </li>
+    </ul>
+        <!-- example YAML file -->
+    <div class="code-header">
+        Example Load YAML File
+    </div>
+    <div class="code-container">
+<textarea id="code">
+stream: demo/simple_loads
+loads:
+  # Space Heater
+  - load_id: 3
+    delay: 10s
+    steady_state_duration: 30s
+    scale_factor: 1
+  # Raspberry Pi 4
+  - name: Single Board Computer
+    load_id: 8
+    delay: 6s
+    scale_factor: 1
+  # Hot Glue Gun
+  - description: High Temperature Epoxy
+    load_id: 10
+    delay: 0
+    scale_factor: 5
+</textarea>
+</div>
+    <h4> Create the Training Data</h4>
+    <p>
+        The <code>build-training-data</code> is a command line tool for creating a stream from the load YAML file. Access the terminal through Jupyter or
+        by SSH. Training data is saved in the <b>Training Data</b> folder.
+    </p>
+    <div class="alert alert-warning">Take care not to accidentally overwrite training sets when using this tool.</div>
+    <!-- command -->
+    <div class="bash-container">
+        <div class="header bash">Command Line:</div>
+        <div class="code bash">
+<b>$> build-training-data</b> loads.yml
+The stream [/Training Data/demo/simple_loads] already exists. Overwrite? (y/N) y
+Turning [Hot Glue Gun] on at 16666
+Turning [Single Board Computer] on at 6000000
+Turning [Space Heater High] on at 10000000
+Turning [Space Heater High] off at 75283333
+Turning [Single Board Computer] off at 357783333
+Turning [Hot Glue Gun] off at 544183333
+        </div>
+    </div>
+
+
+    </div>
+</body>
+</html>

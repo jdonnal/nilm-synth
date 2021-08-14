@@ -1,0 +1,19 @@
+source_node: hollyberry # location of the instantiated_load data
+library_node: hollyberry # location of the nilm_identify_load library
+dataset: Donnal House # name of dataset containing instantiated_load data
+dataset_stream: /NILM Training/Homes/Donnal/August_24HR #TEMPORARY, this is now part of the dataset schema
+loads:
+  - name: Heater # nilm_identify_load name
+    description: Space Heater #(optional) description of the nilm_identify_load
+    image: heater.jpg # place in docs/assets/images
+    # Nilm Metadata appliance type
+    # see https://github.com/nilmtk/nilm_metadata/tree/master/nilm_metadata/central_metadata/appliance_types
+    appliance_type: electric space heater
+    load_library_path: /Load Library/Residential/Space Heater
+
+  - name: Fridge
+    description: Kitchen Fridge
+    image: fridge.jpg
+    load_library_path: /Load Library/Residential/Fridge
+    appliance_type: fridge freezer
+

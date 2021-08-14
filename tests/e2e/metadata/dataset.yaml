@@ -1,0 +1,21 @@
+contact: donnal@usna.edu
+creators: John Donnal
+description: E2E Test
+meter_devices:
+  power_meter:
+    max_sample_period: 4
+    measurements:
+    - physical_quantity: power
+      type: active
+    - physical_quantity: power
+      type: reactive
+    - physical_quantity: power
+      type: apparent
+    model: varies
+    sample_period: 1
+    wireless: false
+name: Example Dataset
+number_of_buildings: 1
+schema: https://github.com/nilmtk/nilm_metadata/tree/v0.2
+subject: Synthetic dataset produced by nilm-synth
+timezone: America/New_York
